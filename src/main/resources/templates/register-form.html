@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <title>Formulaire d'enregistrement</title>
+</head>
+<body>
+<h1>Formulaire d'enregistrement</h1>
+<form action="#" th:action="@{/register}" th:object="${registrationForm}" method="post">
+    <fieldset>
+        <p>
+            <label for="firstname">Prénom</label>
+            <input type="text" th:field="*{firstname}" id="firstname">
+        </p>
+        <p>
+            <label for="lastname">Nom</label>
+            <input type="text" th:field="*{lastname}" id="lastname">
+        </p>
+        <p>
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" th:field="*{username}" id="username" required>
+        </p>
+        <p>
+            <label for="password">Mot de passe</label>
+            <input type="password" th:field="*{password}" id="password" required>
+        </p>
+        <p>
+            <label for="passwordConfirm">Confirmer le mot de passe</label>
+            <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" required>
+        </p>
+        <p th:if="*{hasErrors()}" class="error">Le mot de passe et la confirmation sont différents.</p>
+        <input type="submit" value="S'enregistrer">
+    </fieldset>
+</form>
+</body>
+</html>

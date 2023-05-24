@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Enregistrement réussi</title>
+</head>
+<body th:object="${registrationForm}">
+<h1>Enregistrement réussi</h1>
+<p>
+    Votre compte a bien été créé cher <strong th:text="*{firstname}"></strong> <strong th:text="*{lastname}"></strong>!
+</p>
+<p><a th:href="@{/register-form}">Enregistrer un autre utilisateur.</a></p>
+</body>
+</html>
