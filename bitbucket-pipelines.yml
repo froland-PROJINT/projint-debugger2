@@ -10,9 +10,9 @@ image: maven:3-temurin-17
 pipelines:
   default:
     - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - maven
-            script:
-              - mvn -B verify --file pom.xml
+      - step:
+          name: Build and Test
+          caches:
+            - maven
+          script:
+            - mvn -B verify --file pom.xml
