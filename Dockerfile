@@ -3,14 +3,15 @@ FROM maven:3-eclipse-temurin-17 as builder
 WORKDIR /workspace/app
 COPY pom.xml .
 COPY src src
-
 RUN --mount=type=cache,target=/root/.m2 mvn package -DskipTests
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+RUN mkdir -p target/dependency && (cd target/dependency; java -Djarmode=layertools -jar ../*.jar extract)
 
 FROM eclipse-temurin:17-jre as runner
 VOLUME /tmp
+WORKDIR application
 ARG DEPENDENCY=/workspace/app/target/dependency
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","be.eafcuccle.projint.debugger2.ProjintDebugger2Application"]
+COPY --from=builder ${DEPENDENCY}/dependencies/ ./
+COPY --from=builder ${DEPENDENCY}/spring-boot-loader/ ./
+COPY --from=builder ${DEPENDENCY}/snapshot-dependencies/ ./
+COPY --from=builder ${DEPENDENCY}/application/ ./
+ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher"]
